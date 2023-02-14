@@ -1,0 +1,21 @@
+{
+    "builders": [
+        {
+                "type": "amazon-ebs",
+                "instance_type": "t2.micro",
+                "source_ami": "ami-0913c47048d853921",
+                "ssh_username": "ec2-user",
+                "ami_name": "cloudwatch-test3",
+                "subnet_id": "subnet-020f843aee38dcd49",
+                "vpc_id": "vpc-0eb6ac6f066d839e4",
+                "security_group_id": "sg-081ccc259a9093ab3"
+        }
+    ],
+    "provisioners": [
+        {
+                "type": "ansible",
+                "playbook_file": "cloudwatch.yml"
+        }
+    ]
+}
+  

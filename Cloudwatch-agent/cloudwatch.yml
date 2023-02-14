@@ -1,0 +1,8 @@
+---
+- name: Install and configure CloudWatch agent on Linux EC2 instance
+  hosts: default
+  become: true
+
+  roles:
+  - install
+

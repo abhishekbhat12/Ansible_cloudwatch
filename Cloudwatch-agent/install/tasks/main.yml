@@ -1,0 +1,20 @@
+---
+- name: Download and install Amazon CloudWatch agent
+  yum:
+    name: amazon-cloudwatch-agent
+    state: present
+
+- name: Copy the CloudWatch agent configuration file to the host
+  copy:
+    src: cloudwatch-agent.json
+    dest: /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json
+    mode: 0644
+
+- name: Start the CloudWatch agent
+  shell: /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json -s
+  register: cloudwatch_agent_result
+  changed_when: "'CloudWatch Log Agent configuration updated.' not in cloudwatch_agent_result.stdout"
+
+- name: Display result
+  debug:
+    var: cloudwatch_agent_result.stdout
